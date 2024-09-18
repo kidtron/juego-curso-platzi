@@ -1,0 +1,73 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>🔥💧⚡POKÉMON⚡💧🔥</title>
+
+        <link rel="stylesheet" href="./styles.css">
+        <style>
+            @import url('https://fonts.cdnfonts.com/css/pokemon-solid');
+            @import url('https://fonts.cdnfonts.com/css/pokemon-hollow');
+        </style>
+        
+    </head>
+    <body>
+     
+        <section id="seleccionar-mascota">
+            <h1 class="title">POKÉMON</h1>
+
+            <h2 class="subtitulo">Elije tu pokémon</h2>
+            <div id="contenedorTarjetas" class="tarjetas">
+                            
+                
+            </div>
+            
+            <button id="boton-mascota">Seleccionar</button> 
+        </section>
+
+        <section id="ver-mapa">
+            <h1 class="title">Recorre el mapa con tu pokemon</h1>
+            <canvas id="mapa"></canvas>
+            <button onmouseup="detenerMovimiento()" onmousedown="moverDerecha()">Derecha</button>
+            <button onmouseup="detenerMovimiento()" onmousedown="moverArriba()">Arriba</button>
+            <button onmouseup="detenerMovimiento()" onmousedown="moverAbajo()">Abajo</button>
+            <button onmouseup="detenerMovimiento()" onmousedown="moverIzquierda()">Izquierda</button>
+        </section>
+        
+        <section id="seleccionar-ataque">
+            
+            <section id="segunda-pantalla">
+            <h1  class="title">POKÉMON</h1>
+            </section>
+
+            <h2 class="subtitulo">Elije tu ataque</h2>
+                <div id="contenedorAtaques" class="tarjetas-ataques">                   
+                </div>
+            
+
+                
+                <div id = "mensajes">
+                        <p id="resultado"> presiona un botón para comenzar a atacar</p>
+                        <section id = "reiniciar">
+                            <button id="boton-reinicio">Reiniciar</button>
+                        </section>  
+                </div>
+          
+
+                <div class="Caja-grande">
+                    <div class="ataques-jugador">
+                        <p id="vida-mascota">0</p>
+                        <p id="mascota-jugador"></p>
+                        <div id="ataque-jugador"></div>
+                    </div>
+                    <div class="ataques-enemigo">
+                        <p id="vida-enemigo">0</p>
+                        <p id="mascota-enemigo"></p>
+                        <div id="ataque-enemigo"></div>
+                    </div>
+                </div>
+            
+            
+        </section>
+        <script src="pokemon.js/pokemon.js"></script>    
+    </body>
+</html>
