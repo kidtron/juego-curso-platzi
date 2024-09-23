@@ -5,10 +5,11 @@
     font-family: 'Pokemon Hollow', sans-serif;
     font-family: 'Pokemon Solid', sans-serif;
     color: #76ABAE;
-
+    margin-bottom: -40;
 
 
 }
+
 
 .subtitulo{
     color: #EEEEEE;
@@ -153,8 +154,8 @@ html {
 .Caja-grande{
     display: grid;
     grid-template-areas:
-    "a a a a b b b b"
-    "a a a a b b b b";
+    "a a a c c c b b b"
+    "a a a c c c b b b";
 
   align-items: start;
  
@@ -186,7 +187,7 @@ html {
 
 .ataques-jugador, .ataques-enemigo, #mensajes {
 
-    grid-row: auto;
+    display: flex;
     justify-items: center;
     border-radius: 20px;
     background-color: #76ABAE;
@@ -196,4 +197,37 @@ html {
     margin: 30px;
     justify-content: center;
     padding: 30px;
+}
+
+#botones-movimiento {
+    width: 200px;
+    height: 100px;
+    padding: 12px;
+    background-color: #76ABAE;
+    box-sizing: border-box;
+    margin: 10px;
+    border-radius: 20px;
+    display: flex;
+    color: #31363F;
+    justify-content: center;
+    align-items: center;
+    font-size: 20;
+    cursor: pointer;
+}
+@media (max-width: 400px){
+    .Derecha, .Izquierda, .Arriba, .Abajo button{
+        width: 200px;
+        height: 100px;
+        padding: 12px;
+        background-color: #76ABAE;
+        box-sizing: border-box;
+        margin: 10px;
+        border-radius: 20px;
+        display: flex;
+        color: #31363F;
+        justify-content: center;
+        align-items: center;
+        font-size: 20;
+        cursor: pointer;
+    }
 }

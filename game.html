@@ -4,6 +4,7 @@
         <title>🔥💧⚡POKÉMON⚡💧🔥</title>
 
         <link rel="stylesheet" href="./styles.css">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
         <style>
             @import url('https://fonts.cdnfonts.com/css/pokemon-solid');
             @import url('https://fonts.cdnfonts.com/css/pokemon-hollow');
@@ -25,9 +26,14 @@
         </section>
 
         <section id="ver-mapa">
-            <h1 class="title">Recorre el mapa con tu pokemon</h1>
+            <h2 class="subtitulo">Recorre el mapa con tu pokemon</h2>
             <canvas id="mapa"></canvas>
-
+            <div id="botones-movimiento">
+                <button id="Derecha" onmouseup="detenerMovimiento()" onmousedown="moverDerecha()">Derecha</button>
+                <button id="Arriba" onmouseup="detenerMovimiento()" onmousedown="moverArriba()">Arriba</button>
+                <button id="Izquierda" onmouseup="detenerMovimiento()" onmousedown="moverIzquierda()">Izquierda</button>
+                <button id="Abajo" onmouseup="detenerMovimiento()" onmousedown="moverAbajo()">Abajo</button>
+            </div>
         </section>
         
         <section id="seleccionar-ataque">
@@ -42,18 +48,19 @@
             
 
                 
-                <div id = "mensajes">
-                        <p id="resultado"> presiona un botón para comenzar a atacar</p>
-                        <section id = "reiniciar">
-                            <button id="boton-reinicio">Reiniciar</button>
-                        </section>  
-                </div>
+
 
                 <div class="Caja-grande">
                     <div class="ataques-jugador">
                         <p id="vida-mascota">0</p>
                         <p id="mascota-jugador"></p>
                         <div id="ataque-jugador"></div>
+                    </div>
+                    <div id = "mensajes">
+                        <p id="resultado"> presiona un botón para comenzar a atacar</p>
+                        <section id = "reiniciar">
+                            <button id="boton-reinicio">Reiniciar</button>
+                        </section>  
                     </div>
                     <div class="ataques-enemigo">
                         <p id="vida-enemigo">0</p>
