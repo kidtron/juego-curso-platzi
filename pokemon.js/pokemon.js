@@ -24,6 +24,10 @@ const sectionMesajes = document.getElementById("resultado")
 const ataquesJugador = document.getElementById("ataque-jugador")
 const ataquesEnemigo = document.getElementById("ataque-enemigo")
 
+//mapa
+
+
+
 //botones
 
 let btns = document.querySelectorAll("a");
@@ -70,17 +74,31 @@ let lienzo = mapa.getContext("2d")
 let intervalo
 let mapaBackground = new Image()
 mapaBackground.src = "./assets/mokemap.png"
+let alturaQueBuscamos
+let anchoDelMapa = window.innerWidth - 20
+const anchoMaximoDelMapa = 500
+
+
+
+if (anchoDelMapa > anchoMaximoDelMapa) {
+    anchoDelMapa = anchoMaximoDelMapa - 20
+}
+alturaQueBuscamos = anchoDelMapa * 600 / 800
+
+
+mapa.width = anchoDelMapa
+mapa.height = alturaQueBuscamos
 
 class Pokemon {
-    constructor(nombre, foto, vida, fotoMapa, x = 10, y = 10) {
+    constructor(nombre, foto, vida, fotoMapa,) {
         this.nombre = nombre
         this.foto = foto
         this.vida = vida
         this.ataques = []
-        this.x = x
-        this.y = y
         this.ancho = 40
         this.alto = 40
+        this.x = aleatorio(0, mapa.width - this.ancho)
+        this.y = aleatorio(0, mapa.height - this.alto)
         this.mapaFoto = new Image()
         this.mapaFoto.src = fotoMapa
         this.velocidadX = 0
@@ -104,11 +122,11 @@ let pikachu = new Pokemon("Pikachu", "./assets/pikachu.png", 5, "./assets/pikach
 
 let charmander = new Pokemon("Charmander", "./assets/charmander.png", 5,"./assets/charmanderCabeza.png")
 
-let squirtleEnemigo = new Pokemon("Squirtle", "./assets/squirtle.png", 5, "./assets/squirtleCabeza.png", 80, 120)
+let squirtleEnemigo = new Pokemon("Squirtle", "./assets/squirtle.png", 5, "./assets/squirtleCabeza.png")
 
-let pikachuEnemigo = new Pokemon("Pikachu", "./assets/pikachu.png", 5, "./assets/pikachuCabeza.png", 150, 95)
+let pikachuEnemigo = new Pokemon("Pikachu", "./assets/pikachu.png", 5, "./assets/pikachuCabeza.png")
 
-let charmanderEnemigo = new Pokemon("Charmander", "./assets/charmander.png", 5,"./assets/charmanderCabeza.png", 200, 190)
+let charmanderEnemigo = new Pokemon("Charmander", "./assets/charmander.png", 5,"./assets/charmanderCabeza.png")
 
 squirtle.ataques.push(
     {nombre: "💧", id: "boton-agua"},
@@ -445,8 +463,6 @@ function sePresionaUnaTecla(event) {
 }
 
 function iniciarMapa() {
-    mapa.width = 320
-    mapa.height = 240
     mjo = obtenerMascota(mascotaJugador)
 
     intervalo = setInterval(pintarCanvas, 50)
