@@ -199,6 +199,19 @@ function iniciarJuego(){
     sectionReiniciar.style.display = "none"
     botonMascota.addEventListener("click", seleccionarMascota)
     botonReiniciar.addEventListener("click", ReiniciarJuego)
+    unirseAlJuego()
+}
+
+function unirseAlJuego() {
+    fetch("http://localhost:8000/unirse")
+    .then(function(res){
+        if (res.ok) {
+            res.text()
+                .then(function (respuesta) {
+                    console.log(respuesta)
+                })
+        }
+    })
 }
 
 function seleccionarMascota() {
