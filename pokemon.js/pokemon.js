@@ -49,6 +49,7 @@ const contenedorAtaques = document.getElementById("contenedorAtaques")
 const sectionVerMapa = document.getElementById("ver-mapa")
 const mapa = document.getElementById("mapa")
 
+let jugadorID = null
 let pokemones = []
 let ataqueJugador = []
 let ataqueEnemigo = []
@@ -209,6 +210,7 @@ function unirseAlJuego() {
             res.text()
                 .then(function (respuesta) {
                     console.log(respuesta)
+                    jugadorID = respuesta
                 })
         }
     })
@@ -229,14 +231,27 @@ function seleccionarMascota() {
     }else if(inputCharmander.checked){
         spanMascotaJugador.innerHTML = inputCharmander.id
         mascotaJugador = inputCharmander.id
-    }else
+    }else{
         
         ReiniciarJuego(); 
-        
+    }    
+    seleccionarPokemon(mascotaJugador)
     extraerAtaques(mascotaJugador)
     sectionVerMapa.style.display = "flex"
     iniciarMapa()       
 
+}
+
+function seleccionarPokemon(mascotaJugador) {
+    fetch(`http://localhost:8000/pokemon/${jugadorID}`, {
+        method: "post",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify({
+            pokemon: mascotaJugador
+        })
+    })
 }
 
 function extraerAtaques(mascotaJugador) {
