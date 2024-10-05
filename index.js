@@ -15,6 +15,10 @@ class Jugador {
     asignarPokemon(pokemon) {
         this.pokemon = pokemon
     }
+    actualizarPosicion(x, y) {
+        this.x = x
+        this.y = y
+    }
 }
 
 class Pokemon {
@@ -46,6 +50,17 @@ app.post("/pokemon/:jugadorID", (req,res) => {
     res.end()
 })
 
+app.post("/pokemon/:jugadorID/posicion", (req, res) => {
+        const jugadorID = req.params.jugadorID || ""
+    const x = req.body.x || 0
+    const y = req.body.y || 0
+    const jugadorIndex = jugadores.findIndex((jugador) => jugadorID === jugador.id)
+
+    if (jugadorIndex >= 0 ) {
+        jugadores[jugadorIndex].actualizarPosicion(x, y)
+    }
+    res.end()
+})
 
 
 app.listen(8000, () => {
