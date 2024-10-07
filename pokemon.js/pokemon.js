@@ -51,6 +51,7 @@ const mapa = document.getElementById("mapa")
 
 let jugadorID = null
 let pokemones = []
+let pokemonesEnemigos = []
 let ataqueJugador = []
 let ataqueEnemigo = []
 let opcionDePokemones
@@ -413,9 +414,9 @@ function pintarCanvas() {
     )
     mjo.pintarPokemon()
     enviarPosicion(mjo.x, mjo.y)
-    squirtleEnemigo.pintarPokemon()
-    pikachuEnemigo.pintarPokemon()
-    charmanderEnemigo.pintarPokemon()
+    pokemonesEnemigos.forEach(function (pokemon){
+        pokemon.pintarPokemon()
+    })
     if (mjo.velocidadX !== 0 || mjo.velocidadY !== 0) {
         revisarColision(squirtleEnemigo)
         revisarColision(pikachuEnemigo)
@@ -440,7 +441,7 @@ function enviarPosicion(x, y) {
             res.json()
                 .then(function ({ enemigos }){
                     console.log(enemigos)   
-                    enemigos.forEach(function (enemigo) {
+                    pokemonesEnemigos = enemigos.map(function (enemigo) {
                         let pokemonEnemigo = null
                         const pokemonNombre = enemigo.pokemon.nombre || ""
                         if (pokemonNombre === "Squirtle"){
@@ -452,7 +453,7 @@ function enviarPosicion(x, y) {
                         }
                         pokemonEnemigo.x = enemigo.x
                         pokemonEnemigo.y = enemigo.y
-                        pokemonEnemigo.pintarPokemon()
+                        return pokemonEnemigo
 
                     })
                 })
