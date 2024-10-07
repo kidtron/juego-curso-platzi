@@ -91,7 +91,8 @@ mapa.width = anchoDelMapa
 mapa.height = alturaQueBuscamos
 
 class Pokemon {
-    constructor(nombre, foto, vida, fotoMapa,) {
+    constructor(nombre, foto, vida, fotoMapa, id = null) {
+        this.id = id
         this.nombre = nombre
         this.foto = foto
         this.vida = vida
@@ -123,59 +124,32 @@ let pikachu = new Pokemon("Pikachu", "./assets/pikachu.png", 5, "./assets/pikach
 
 let charmander = new Pokemon("Charmander", "./assets/charmander.png", 5,"./assets/charmanderCabeza.png")
 
-let squirtleEnemigo = new Pokemon("Squirtle", "./assets/squirtle.png", 5, "./assets/squirtleCabeza.png")
 
-let pikachuEnemigo = new Pokemon("Pikachu", "./assets/pikachu.png", 5, "./assets/pikachuCabeza.png")
-
-let charmanderEnemigo = new Pokemon("Charmander", "./assets/charmander.png", 5,"./assets/charmanderCabeza.png")
-
-squirtle.ataques.push(
+const ATAQUES_SQUIRTLE = [
     {nombre: "💧", id: "boton-agua"},
     {nombre: "💧", id: "boton-agua"},
     {nombre: "💧", id: "boton-agua"},
     {nombre: "⚡", id: "boton-rayo"},
     {nombre: "🔥", id: "boton-fuego"}
-)
+]
+squirtle.ataques.push(...ATAQUES_SQUIRTLE)
+const ATAQUES_PIKACHU = [
+    {nombre: "⚡", id: "boton-rayo"},
+    {nombre: "⚡", id: "boton-rayo"},
+    {nombre: "⚡", id: "boton-rayo"},
+    {nombre: "💧", id: "boton-agua"},
+    {nombre: "🔥", id: "boton-fuego"},
+]
+pikachu.ataques.push(...ATAQUES_PIKACHU)
+const ATAQUES_CHARMANDER = [
+    {nombre: "🔥", id: "boton-fuego"},
+    {nombre: "🔥", id: "boton-fuego"},
+    {nombre: "🔥", id: "boton-fuego"},
+    {nombre: "💧", id: "boton-agua"},
+    {nombre: "⚡", id: "boton-rayo"},
+]
+charmander.ataques.push(...ATAQUES_CHARMANDER)
 
-squirtleEnemigo.ataques.push(
-    {nombre: "💧", id: "boton-agua"},
-    {nombre: "💧", id: "boton-agua"},
-    {nombre: "💧", id: "boton-agua"},
-    {nombre: "⚡", id: "boton-rayo"},
-    {nombre: "🔥", id: "boton-fuego"}
-)
-
-pikachu.ataques.push(
-    {nombre: "⚡", id: "boton-rayo"},
-    {nombre: "⚡", id: "boton-rayo"},
-    {nombre: "⚡", id: "boton-rayo"},
-    {nombre: "💧", id: "boton-agua"},
-    {nombre: "🔥", id: "boton-fuego"},
-)
-
-pikachuEnemigo.ataques.push(
-    {nombre: "⚡", id: "boton-rayo"},
-    {nombre: "⚡", id: "boton-rayo"},
-    {nombre: "⚡", id: "boton-rayo"},
-    {nombre: "💧", id: "boton-agua"},
-    {nombre: "🔥", id: "boton-fuego"},
-)
-
-charmander.ataques.push(
-    {nombre: "🔥", id: "boton-fuego"},
-    {nombre: "🔥", id: "boton-fuego"},
-    {nombre: "🔥", id: "boton-fuego"},
-    {nombre: "💧", id: "boton-agua"},
-    {nombre: "⚡", id: "boton-rayo"},
-)
-
-charmanderEnemigo.ataques.push(
-    {nombre: "🔥", id: "boton-fuego"},
-    {nombre: "🔥", id: "boton-fuego"},
-    {nombre: "🔥", id: "boton-fuego"},
-    {nombre: "💧", id: "boton-agua"},
-    {nombre: "⚡", id: "boton-rayo"},
-)
 
 pokemones.push(squirtle,pikachu,charmander)
 function iniciarJuego(){
@@ -204,7 +178,7 @@ function iniciarJuego(){
 }
 
 function unirseAlJuego() {
-    fetch("http://localhost:8000/unirse")
+    fetch("http://localhost:8080/unirse")
     .then(function(res){
         if (res.ok) {
             res.text()
@@ -243,7 +217,7 @@ function seleccionarMascota() {
 }
 
 function seleccionarPokemon(mascotaJugador) {
-    fetch(`http://localhost:8000/pokemon/${jugadorID}`, {
+    fetch(`http://localhost:8080/pokemon/${jugadorID}`, {
         method: "post",
         headers: {
             "Content-type": "application/json"
@@ -450,17 +424,39 @@ function pintarCanvas() {
 
 }
 
-function enviarPosicion(x, y){
-    fetch(`http://localhost:8000/mokepon/${jugadorID}/posicion`, {
+function enviarPosicion(x, y) {
+    fetch(`http://localhost:8080/pokemon/${jugadorID}/posicion`, {
         method: "post",
         headers: {
             "Content-Type": "application/json"
-
         },
         body: JSON.stringify({
             x,
             y
         })
+    })
+    .then(function (res) {
+        if (res.ok) {
+            res.json()
+                .then(function ({ enemigos }){
+                    console.log(enemigos)   
+                    enemigos.forEach(function (enemigo) {
+                        let pokemonEnemigo = null
+                        const pokemonNombre = enemigo.pokemon.nombre || ""
+                        if (pokemonNombre === "Squirtle"){
+                            pokemonEnemigo = new Pokemon("Squirtle", "./assets/squirtle.png", 5, "./assets/squirtleCabeza.png")
+                        }else if (pokemonNombre === "Pikachu") {
+                            pokemonEnemigo = new Pokemon("Pikachu", "./assets/pikachu.png", 5, "./assets/pikachuCabeza.png")
+                        }else if (pokemonNombre === "Charmander") {
+                            pokemonEnemigo = new Pokemon("Charmander", "./assets/charmander.png", 5,"./assets/charmanderCabeza.png")
+                        }
+                        pokemonEnemigo.x = enemigo.x
+                        pokemonEnemigo.y = enemigo.y
+                        pokemonEnemigo.pintarPokemon()
+
+                    })
+                })
+        }
     })
 }
 

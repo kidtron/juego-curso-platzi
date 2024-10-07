@@ -59,10 +59,15 @@ app.post("/pokemon/:jugadorID/posicion", (req, res) => {
     if (jugadorIndex >= 0 ) {
         jugadores[jugadorIndex].actualizarPosicion(x, y)
     }
-    res.end()
+
+    const enemigos = jugadores.filter((jugador) => jugadorID !== jugador.id)
+
+    res.send({
+        enemigos
+    })
 })
 
 
-app.listen(8000, () => {
+app.listen(8080, () => {
     console.log("servidor funcionando")
 })
