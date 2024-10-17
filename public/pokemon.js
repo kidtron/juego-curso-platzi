@@ -180,7 +180,7 @@ function iniciarJuego(){
 }
 
 function unirseAlJuego() {
-    fetch("http://localhost:8080/unirse")
+    fetch("http://192.168.1.6:8080/unirse")
     .then(function(res){
         if (res.ok) {
             res.text()
@@ -194,7 +194,7 @@ function unirseAlJuego() {
 
 function seleccionarMascota() {
 
-    sectionSeleccionarMascota.style.display = "none"
+   
 
 
 
@@ -208,9 +208,11 @@ function seleccionarMascota() {
         spanMascotaJugador.innerHTML = inputCharmander.id
         mascotaJugador = inputCharmander.id
     }else{
-        
-        ReiniciarJuego(); 
+        alert("selecciona una mascota")
+        //ReiniciarJuego(); 
+        return
     }    
+    sectionSeleccionarMascota.style.display = "none"
     seleccionarPokemon(mascotaJugador)
     extraerAtaques(mascotaJugador)
     sectionVerMapa.style.display = "flex"
@@ -219,7 +221,7 @@ function seleccionarMascota() {
 }
 
 function seleccionarPokemon(mascotaJugador) {
-    fetch(`http://localhost:8080/pokemon/${jugadorID}`, {
+    fetch(`http://192.168.1.6:8080/pokemon/${jugadorID}`, {
         method: "post",
         headers: {
             "Content-type": "application/json"
@@ -293,7 +295,7 @@ function secuenciaAtaques() {
 }
 
 function enviarAtaques() {
-    fetch(`http://localhost:8080/pokemon/${jugadorID}/ataques`, {
+    fetch(`http://192.168.1.6:8080/pokemon/${jugadorID}/ataques`, {
         method: "post",
         headers: {
             "Content-Type": "application/json"
@@ -307,7 +309,7 @@ function enviarAtaques() {
 }
 
 function obtenerAtaques() {
-    fetch(`http://localhost:8080/pokemon/${enemigoID}/ataques`)
+    fetch(`http://192.168.1.6:8080/pokemon/${enemigoID}/ataques`)
         .then(function (res) {
             if (res.ok) {
                 res.json()
@@ -454,7 +456,7 @@ function pintarCanvas() {
 }
 
 function enviarPosicion(x, y) {
-    fetch(`http://localhost:8080/pokemon/${jugadorID}/posicion`, {
+    fetch(`http://192.168.1.6:8080/pokemon/${jugadorID}/posicion`, {
         method: "post",
         headers: {
             "Content-Type": "application/json"
