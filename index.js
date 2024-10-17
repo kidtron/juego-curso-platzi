@@ -82,7 +82,13 @@ app.post("/pokemon/:jugadorID/ataques", (req,res) => {
     res.end()
 })
 
-
+app.get("/pokemon/:jugadorID/ataques", (req, res) => {
+    const jugadorID = req.params.jugadorID || ""
+    const jugador = jugadores.find((jugador)=> jugador.id === jugadorID)
+    res.send({
+        ataques: jugador.ataques || []
+    })
+})
 
 app.listen(8080, () => {
     console.log("servidor funcionando")
