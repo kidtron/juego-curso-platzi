@@ -19,6 +19,9 @@ class Jugador {
         this.x = x
         this.y = y
     }
+    asignarAtaques(ataques) {
+        this.ataques = ataques
+    }
 }
 
 class Pokemon {
@@ -66,6 +69,19 @@ app.post("/pokemon/:jugadorID/posicion", (req, res) => {
         enemigos
     })
 })
+
+app.post("/pokemon/:jugadorID/ataques", (req,res) => {
+    const jugadorID = req.params.jugadorID || ""
+    const ataques =req.body.ataques || []
+
+    const jugadorIndex = jugadores.findIndex((jugador) => jugadorID === jugador.id)
+
+    if (jugadorIndex >= 0 ) {
+        jugadores[jugadorIndex].asignarAtaques(ataques)
+    } 
+    res.end()
+})
+
 
 
 app.listen(8080, () => {

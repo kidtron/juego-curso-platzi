@@ -50,6 +50,7 @@ const sectionVerMapa = document.getElementById("ver-mapa")
 const mapa = document.getElementById("mapa")
 
 let jugadorID = null
+let enemigoID = null
 let pokemones = []
 let pokemonesEnemigos = []
 let ataqueJugador = []
@@ -279,13 +280,28 @@ function secuenciaAtaques() {
                 boton.style.background = "#112f58"
                 boton.disabled = true
             }
-            ataqueAleatorioEnemigo()
+            if (ataqueJugador.length === 5) {
+                enviarAtaques()
+
+            }
         })
         
     })
 
 
     
+}
+
+function enviarAtaques() {
+    fetch(`http://localhost:8080/pokemon/${jugadorID}/ataques`, {
+        method: "post",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            ataques: ataqueJugador
+        })
+    })
 }
 
 function seleccionarMascotaEnemigo(enemigo) {
@@ -416,13 +432,8 @@ function pintarCanvas() {
     enviarPosicion(mjo.x, mjo.y)
     pokemonesEnemigos.forEach(function (pokemon){
         pokemon.pintarPokemon()
+        revisarColision(pokemon)
     })
-    if (mjo.velocidadX !== 0 || mjo.velocidadY !== 0) {
-        revisarColision(squirtleEnemigo)
-        revisarColision(pikachuEnemigo)
-        revisarColision(charmanderEnemigo)
-    }
-
 }
 
 function enviarPosicion(x, y) {
@@ -445,11 +456,11 @@ function enviarPosicion(x, y) {
                         let pokemonEnemigo = null
                         const pokemonNombre = enemigo.pokemon.nombre || ""
                         if (pokemonNombre === "Squirtle"){
-                            pokemonEnemigo = new Pokemon("Squirtle", "./assets/squirtle.png", 5, "./assets/squirtleCabeza.png")
+                            pokemonEnemigo = new Pokemon("Squirtle", "./assets/squirtle.png", 5, "./assets/squirtleCabeza.png", enemigo.id)
                         }else if (pokemonNombre === "Pikachu") {
-                            pokemonEnemigo = new Pokemon("Pikachu", "./assets/pikachu.png", 5, "./assets/pikachuCabeza.png")
+                            pokemonEnemigo = new Pokemon("Pikachu", "./assets/pikachu.png", 5, "./assets/pikachuCabeza.png", enemigo.id)
                         }else if (pokemonNombre === "Charmander") {
-                            pokemonEnemigo = new Pokemon("Charmander", "./assets/charmander.png", 5,"./assets/charmanderCabeza.png")
+                            pokemonEnemigo = new Pokemon("Charmander", "./assets/charmander.png", 5,"./assets/charmanderCabeza.png", enemigo.id)
                         }
                         pokemonEnemigo.x = enemigo.x
                         pokemonEnemigo.y = enemigo.y
@@ -541,6 +552,7 @@ function revisarColision(enemigo){
     } 
         detenerMovimiento()
         clearInterval(intervalo)
+        enemigoID = enemigo.id
         sectionSeleccionarAtaque.style.display = "flex"
         sectionVerMapa.style.display = "none"
         seleccionarMascotaEnemigo(enemigo)
