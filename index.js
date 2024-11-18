@@ -37,6 +37,7 @@ app.get("/unirse", (req, res) => {
     jugadores.push(jugador)
     res.setHeader("Access-Control-Allow-Origin", "*") 
     res.send(id)
+    console.log(id)
 })
 
 app.post("/pokemon/:jugadorID", (req,res) => {
@@ -94,3 +95,4 @@ app.get("/pokemon/:jugadorID/ataques", (req, res) => {
 app.listen(8080, () => {
     console.log("servidor funcionando")
 })
+

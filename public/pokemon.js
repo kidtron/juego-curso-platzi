@@ -180,7 +180,7 @@ function iniciarJuego(){
 }
 
 function unirseAlJuego() {
-    fetch("http://192.168.1.6:8080/unirse")
+    fetch("http://localhost:8080/unirse")
     .then(function(res){
         if (res.ok) {
             res.text()
@@ -221,7 +221,7 @@ function seleccionarMascota() {
 }
 
 function seleccionarPokemon(mascotaJugador) {
-    fetch(`http://192.168.1.6:8080/pokemon/${jugadorID}`, {
+    fetch(`http://localhost:8080/pokemon/${jugadorID}`, {
         method: "post",
         headers: {
             "Content-type": "application/json"
@@ -295,7 +295,7 @@ function secuenciaAtaques() {
 }
 
 function enviarAtaques() {
-    fetch(`http://192.168.1.6:8080/pokemon/${jugadorID}/ataques`, {
+    fetch(`http://localhost:8080/pokemon/${jugadorID}/ataques`, {
         method: "post",
         headers: {
             "Content-Type": "application/json"
@@ -309,7 +309,7 @@ function enviarAtaques() {
 }
 
 function obtenerAtaques() {
-    fetch(`http://192.168.1.6:8080/pokemon/${enemigoID}/ataques`)
+    fetch(`http://localhost:8080/pokemon/${enemigoID}/ataques`)
         .then(function (res) {
             if (res.ok) {
                 res.json()
@@ -456,7 +456,7 @@ function pintarCanvas() {
 }
 
 function enviarPosicion(x, y) {
-    fetch(`http://192.168.1.6:8080/pokemon/${jugadorID}/posicion`, {
+    fetch(`http://localhost:8080/pokemon/${jugadorID}/posicion`, {
         method: "post",
         headers: {
             "Content-Type": "application/json"
